@@ -5,7 +5,10 @@ const path = require('path');
 
 module.exports = (env, argv) => {
   const config = {
-    entry: './src/App.jsx',
+    entry: {
+      app: './src/App.jsx',
+      'service-worker': './src/service-worker.ts',
+    },
     output: {
       path: path.resolve(__dirname, 'public'),
       publicPath: '/',
@@ -48,7 +51,6 @@ module.exports = (env, argv) => {
       new CopyPlugin([
         { from: './src/assets/social', to: './assets/social' },
         { from: './src/assets/favicon.png', to: './assets' },
-        { from: './src/service-worker.js', to: './' },
         { from: './src/index.html', to: './' },
         { from: './src/_headers', to: './' },
       ]),
