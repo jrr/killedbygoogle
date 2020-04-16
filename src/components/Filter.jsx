@@ -15,7 +15,7 @@ export default class Filter extends Component {
     this.clickHandler = this.clickHandler.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { items } = this.props;
     // Get the counts for each time
     const counts = ['app', 'service', 'hardware'].map(
