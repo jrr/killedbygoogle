@@ -15,6 +15,7 @@ export default class Filter extends Component {
     this.clickHandler = this.clickHandler.bind(this);
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const { items } = this.props;
     // Get the counts for each time
