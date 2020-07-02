@@ -1,9 +1,18 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { ListItem } from './Filter.atoms';
 
-const FilterItem = props => {
+type ItemT = [string, string | boolean];
+type ClickHandlerT = (item: ItemT, num: number) => void;
+type PropsT = {
+  active: boolean
+  counts: number[]
+  index: number
+  item: ItemT[]
+  clickHandler: ClickHandlerT
+}
+const FilterItem: React.FunctionComponent<PropsT> = (props) => {
   const { active, clickHandler, counts, index, item } = props;
   return (
     <ListItem className={active ? 'active' : 'inactive'}>
@@ -19,12 +28,5 @@ const FilterItem = props => {
   );
 };
 
-FilterItem.propTypes = {
-  active: PropTypes.bool.isRequired,
-  clickHandler: PropTypes.func.isRequired,
-  counts: PropTypes.arrayOf(PropTypes.number).isRequired,
-  index: PropTypes.number.isRequired,
-  item: PropTypes.arrayOf(PropTypes.any).isRequired,
-};
 
 export default FilterItem;
