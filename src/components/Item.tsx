@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
   format,
   formatDistance,
@@ -49,13 +48,21 @@ const soonToDieIdiom = () => {
 };
 
 
-export default class Item extends Component {
+type ItemProps = {
+  dateOpen: string
+  dateClose: string
+  link: string
+  name: string
+  description: string
+  type: string
+}
+export default class Item extends Component<ItemProps> {
   getIcon() {
     return this.isPast() ? (
       <Icon src={Tombstone} alt="Tombstone" />
     ) : (
-      <Icon src={Guillotine} alt="Guillotine" />
-    );
+        <Icon src={Guillotine} alt="Guillotine" />
+      );
   }
 
   getYears() {
@@ -72,14 +79,14 @@ export default class Item extends Component {
 
   timePhrase() {
     const { dateClose } = this.props;
-    const relativeDate = formatDistanceToNow(parseISO(dateClose), new Date());
+    const relativeDate = formatDistanceToNow(parseISO(dateClose));
     if (!this.isPast()) {
       return <span>{`${soonToDieIdiom()} in ${relativeDate}, `}</span>;
     }
     return <span>{`Killed ${relativeDate} ago, `}</span>;
   }
 
-  ageRange(grave) {
+  ageRange(grave: ItemProps) {
     const monthOpen = format(parseISO(grave.dateClose), 'LLLL');
     const yearOpen = format(parseISO(grave.dateOpen), 'uuuu');
     const yearClose = format(parseISO(grave.dateClose), 'uuuu');
@@ -132,12 +139,3 @@ export default class Item extends Component {
     );
   }
 }
-
-Item.propTypes = {
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  dateClose: PropTypes.string.isRequired,
-  dateOpen: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-};
