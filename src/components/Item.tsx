@@ -48,7 +48,7 @@ const soonToDieIdiom = () => {
 };
 
 
-type ItemProps = {
+export type ItemProps = {
   dateOpen: string
   dateClose: string
   link: string

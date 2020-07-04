@@ -1,19 +1,22 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // Import Styled Components
 import { ListContainer } from './List.atoms';
 import { ListItem } from './Item.atoms';
 
 // Import External Components
-import Item from './Item';
+import Item, { ItemProps } from './Item';
 
-const List = ({ items }) => (
+type ListProps = {
+  items: ItemProps[]
+}
+const List: React.FunctionComponent<ListProps> = ({ items }) => (
   <ListContainer>
     <ListItem>
       <script
         src="//cdn.carbonads.com/carbon.js?serve=CK7I653N&amp;placement=killedbygooglecom"
-        async=""
+        async={false}
         id="_carbonads_js"
       />
     </ListItem>
@@ -22,9 +25,5 @@ const List = ({ items }) => (
     ))}
   </ListContainer>
 );
-
-List.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape(Item.propTypes)).isRequired,
-};
 
 export default List;
