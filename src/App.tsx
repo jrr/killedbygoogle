@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import PropTypes from 'prop-types';
 
 // Global CSS (e.g. body)
 import './global.scss';
@@ -13,8 +12,30 @@ import Search from './components/Search';
 import Filter from './components/Filter';
 import Footer from './components/Footer';
 
-export default class App extends Component {
-  constructor(props) {
+export type Grave = {
+  dateClose: string
+  dateOpen: string
+  description: string
+  link: string
+  name: string
+  type: "app" | "hardware" | "service"
+};
+
+type Props = {
+  data: Grave[]
+}
+type ActiveFilterT = "app" | "service" | "hardware" | false;
+type TermT = string;
+
+type State = {
+  fullList: Grave[]
+  activeFilter: ActiveFilterT
+  term: TermT
+  listOfItems: Grave[]
+}
+
+export default class App extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     const { data } = props;
     this.state = {
@@ -24,12 +45,13 @@ export default class App extends Component {
       term: '',
     };
 
+
     // Bindings
     this.searchFilter = this.searchFilter.bind(this);
     this.setFilter = this.setFilter.bind(this);
   }
 
-  setFilter(val) {
+  setFilter(val: ActiveFilterT) {
     this.setState(
       {
         activeFilter: val,
@@ -38,7 +60,7 @@ export default class App extends Component {
     );
   }
 
-  searchFilter(term) {
+  searchFilter(term: TermT) {
     this.setState(
       {
         term,
@@ -96,17 +118,13 @@ export default class App extends Component {
   }
 }
 
-App.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.any).isRequired,
-};
-
 // Retrieve static json
 fetch('graveyard.json').then(response => {
   // Process it
-  response.json().then(data => {
+  response.json().then((data: Grave[]) => {
     // Sort by the dateClose (date discontinued)
     const graveyard = data.sort(
-      (a, b) => new Date(b.dateClose) - new Date(a.dateClose)
+      (a, b) => Number(new Date(b.dateClose)) - Number(new Date(a.dateClose))
     );
     // Render the app
     render(<App data={graveyard} />, document.querySelector('#killedbygoogle'));

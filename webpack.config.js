@@ -5,7 +5,7 @@ const path = require('path');
 
 module.exports = (env, argv) => {
   const config = {
-    entry: './src/App.jsx',
+    entry: './src/App.tsx',
     output: {
       path: path.resolve(__dirname, 'public'),
       publicPath: '/',
