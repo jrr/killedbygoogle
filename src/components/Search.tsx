@@ -1,19 +1,28 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 // Import Styled Components
 import { SearchContainer, SearchBox } from './Search.atoms';
 
-export default class Search extends Component {
-  constructor() {
-    super();
+type Props = {
+  search: (arg: string) => void
+  term: string
+}
+
+type State = {
+  inputValue: string
+}
+
+export default class Search extends Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props);
     this.state = {
       inputValue: '',
     };
   }
 
-  updateSearch(event) {
+  updateSearch(event: React.ChangeEvent<HTMLInputElement>) {
     const { search } = this.props;
 
     this.setState({
@@ -44,7 +53,3 @@ export default class Search extends Component {
     );
   }
 }
-
-Search.propTypes = {
-  search: PropTypes.func.isRequired,
-};
