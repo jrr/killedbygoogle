@@ -6,7 +6,7 @@ import { SearchContainer, SearchBox } from './Search.atoms';
 
 type Props = {
   search: (arg: string) => void
-  term: string
+  term?: string
 }
 
 type State = {
