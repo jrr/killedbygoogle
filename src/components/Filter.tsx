@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import { FilterList } from './Filter.atoms';
 import FilterItem from './FilterItem';
-import Item from './Item';
+import { ItemProps } from './Item';
+import { ActiveFilterT } from '../App';
 
-export default class Filter extends Component {
-  constructor(props) {
+type Props = {
+  current: ActiveFilterT
+  filterHandler: (val: ActiveFilterT) => void
+  items: ItemProps[]
+}
+
+type State = {
+  counts: number[]
+  active: number
+}
+
+export default class Filter extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       active: 0, // Make All the default active
@@ -28,7 +39,7 @@ export default class Filter extends Component {
     this.setState({ counts });
   }
 
-  clickHandler(filter, index) {
+  clickHandler(filter: ActiveFilterT, index: number) {
     const { filterHandler } = this.props;
     // Set the active button
     this.setState({
@@ -40,19 +51,20 @@ export default class Filter extends Component {
 
   render() {
     const { active, counts } = this.state;
+    const filters: [string, ActiveFilterT][] = [
+      ['all', false],
+      ['apps', 'app'],
+      ['services', 'service'],
+      ['hardware', 'hardware'],
+    ];
     return (
       <FilterList>
-        {[
-          ['all', false],
-          ['apps', 'app'],
-          ['services', 'service'],
-          ['hardware', 'hardware'],
-        ].map((type, index) => (
+        {filters.map((type, index) => (
           <FilterItem
             active={active === index}
             clickHandler={this.clickHandler}
             counts={counts}
-            key={type[1]}
+            key={type[0]}
             index={index}
             item={type}
           />
@@ -61,8 +73,3 @@ export default class Filter extends Component {
     );
   }
 }
-
-Filter.propTypes = {
-  filterHandler: PropTypes.func.isRequired,
-  items: PropTypes.arrayOf(PropTypes.shape(Item.propTypes)).isRequired,
-};

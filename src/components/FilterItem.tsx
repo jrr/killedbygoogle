@@ -2,14 +2,15 @@
 import React from 'react';
 
 import { ListItem } from './Filter.atoms';
+import { ActiveFilterT } from '../App';
 
-type ItemT = [string, string | boolean];
-type ClickHandlerT = (item: ItemT, num: number) => void;
+export type ItemT = [string, ActiveFilterT];
+type ClickHandlerT = (item: ActiveFilterT, num: number) => void;
 type PropsT = {
   active: boolean
   counts: number[]
   index: number
-  item: ItemT[]
+  item: ItemT
   clickHandler: ClickHandlerT
 }
 const FilterItem: React.FunctionComponent<PropsT> = (props) => {

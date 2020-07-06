@@ -24,7 +24,7 @@ export type Grave = {
 type Props = {
   data: Grave[]
 }
-type ActiveFilterT = "app" | "service" | "hardware" | false;
+export type ActiveFilterT = "app" | "service" | "hardware" | false;
 type TermT = string;
 
 type State = {
@@ -111,6 +111,7 @@ export default class App extends Component<Props, State> {
           filterHandler={this.setFilter}
           items={fullList}
         />
+
         <List items={listOfItems} />
         <Footer />
       </div>
