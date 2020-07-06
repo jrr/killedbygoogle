@@ -60,8 +60,8 @@ module.exports = (env, argv) => {
   };
 
   if (argv.mode === 'production') {
-    config.resolve.alias.react = 'preact-compat';
-    config.resolve.alias['react-dom'] = 'preact-compat';
+    config.resolve.alias.react = 'preact/compat';
+    config.resolve.alias['react-dom'] = 'preact/compat';
   }
 
   return config;
